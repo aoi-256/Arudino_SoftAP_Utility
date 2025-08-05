@@ -35,6 +35,6 @@ void loop(){
   WifiSoftAP::SendData(data[0], data[1], data[2]);
 
   //ラベル付き（シリアルポートでの閲覧用）
-WifiSoftAP::SendData("data_name", data[0], data[1], data[2]);
+  WifiSoftAP::SendData("data_name", data[0], data[1], data[2]);
 }
 ```
