@@ -82,10 +82,20 @@ namespace WifiSoftAP{
     uint8_t length = sizeof...(args);
     String ary[] = { String(args)... };
     
-    // for文でカンマ区切りで送信
+    // for文でカンマ区切りで送信（7桁固定長）
     for(uint8_t i = 0; i < length; i++) {
       if(i > 0) udp.print(",");  // 最初以外はカンマを付ける
-      udp.print(ary[i]);
+      
+      // 7桁固定長にフォーマット（右詰め、左側スペース埋め）
+      String formatted = ary[i];
+      while(formatted.length() < 7) {
+        formatted = " " + formatted;  // 左側にスペースを追加
+      }
+      if(formatted.length() > 7) {
+        formatted = formatted.substring(0, 7);  // 7桁を超える場合は切り詰め
+      }
+      
+      udp.print(formatted);
     }
     
     udp.println();  // 最後に改行
