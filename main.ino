@@ -23,6 +23,8 @@ void loop() {
   delay(100);
 
   // === 新しいSendData関数のデモ ===
+  // 引数の個数や変数型はtemplateを使用しています
+  // 通信などのコードを実装して、手に入れたデータを送信することができます
   
   // // 1. 単一データ送信
   // WifiSoftAP::SendData(temperature);
