@@ -6,35 +6,40 @@ wifi上で任意のデータを送れるようにしました
 
 ## 使い方
 
-### 1. パスワードとネットワーク名の設定
+### 1. ファイルのダウンロード
 
-Wifi_SoftAP_Setup.hpp内のこの部分を変更してください
-```cpp
-  // ssid（WiFiのネットワーク名）
-  const char *ssid = "TEST_WIFI";
+この2つのファイルをArudinoIDEでマイコンに書き込み
 
-  // pass（WiFiのパスワード。NULLにするとパスワードなしになる）
-  const char *pass = nullptr;  // パスワードなしの場合
+```
+main.ino
+Wifi_SoftAP.hpp
+```
+このファイルをPCにダウンロード(最新のpythonをインストール）
+
+```
+Receiver.py
 ```
 
-### 2. 実際の使用例
+### 2. 送りたいデータを設定
+
+送信したいデータを選択する
+
+- 第1引数の"Label"はありなしが選べます
+
+- 変数型はTemplateを使用しているので気にしないで大丈夫です
 
 ```cpp
-void setup(){
+  // サンプルのセンサーデータ
+  int data1 = random(-1000, 1000);
+  int data2 = random(-1000, 1000);
+  int data3 = random(-1000, 1000);
 
-  //Wifi_SoftAPの初期化
-  WifiSoftAP::Setup();
-  WifiSoftAP::PrintStatus();
-}
-
-void loop(){
-
-  float data[3] = {1.0, 2.0, 3.0};
-
-  //データのみ(csv保存用）
-  WifiSoftAP::SendData(data[0], data[1], data[2]);
-
-  //ラベル付き（シリアルポートでの閲覧用）
-  WifiSoftAP::SendData("data_name", data[0], data[1], data[2]);
-}
+  // データ送信
+  WifiSoftAP::SendData("SensorData", data1, data2, data3);
 ```
+
+### 3. PC側で受信用意をする
+
+Wifiのタブを開いて、デフォルトで```Test_Wifi```があるはずなので、そこに接続
+
+1でダウンロードしたpythonコードを実行するとデータが取得できる
